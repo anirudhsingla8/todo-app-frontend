@@ -34,7 +34,7 @@ const AddTodoForm = ({ user, onAddTodo }) => {
     const tagsArray = tags ? tags.split(',').map(tag => tag.trim()).filter(tag => tag) : [];
     
     try {
-      const response = await fetch('/api/todos', {
+      const response = await fetch('/api/todos/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

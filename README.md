@@ -34,12 +34,25 @@ This is the frontend portion of the React Todo application.
 
 ## Development
 
-The frontend is configured to proxy API requests to the backend running on `http://localhost:3001`.
+The frontend is configured to proxy API requests to the backend. You can configure the backend URL by creating a `.env` file in the root of the project.
 
 To use this frontend with the backend:
-1. Start the backend server (see backend README)
-2. Run `npm run dev` in this directory
-3. Open http://localhost:5173 in your browser
+1. Create a `.env` file in the root of the project. See the "Environment Variables" section for more details.
+2. Start the backend server (see backend README)
+3. Run `npm run dev` in this directory
+4. Open http://localhost:5173 in your browser
+
+## Environment Variables
+
+To run the frontend, you can create a `.env` file in the root of the project and add the following environment variable:
+
+- `VITE_BACKEND_URL`: The URL of the backend server. Defaults to `http://localhost:3000`.
+
+Example `.env` file:
+
+```
+VITE_BACKEND_URL=https://todo-app-backend-vercel.vercel.app/
+```
 
 ## API Endpoints
 

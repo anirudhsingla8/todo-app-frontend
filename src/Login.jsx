@@ -84,8 +84,9 @@ function Login({ onLogin }) {
       });
       const data = await response.json();
       if (response.ok) {
-        notificationService.success('Signup successful! Please log in.');
-        setIsLogin(true);
+        notificationService.success('Signup successful! Welcome.');
+        localStorage.setItem('todoUser', JSON.stringify(data));
+        onLogin(data);
       } else {
         notificationService.error(data.message || 'Signup failed.');
       }

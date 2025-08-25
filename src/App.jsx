@@ -55,14 +55,45 @@ function App() {
     setTodos([])
   }
 
-  const handleUpdateTodo = (id, updatedTodo) => {
-    setTodos(todos.map(todo =>
-      todo.id === id ? { ...todo, ...updatedTodo } : todo
-    ));
+  const handleUpdateTodo = async (id, updatedTodo) => {
+    try {
+      const response = await fetch('/api/todos/update', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, ...updatedTodo })
+      });
+      if (response.ok) {
+        const updated = await response.json();
+        setTodos(todos.map(todo =>
+          todo.id === id ? updated : todo
+        ));
+        notificationService.success('Todo updated successfully!');
+      } else {
+        const error = await response.json();
+        notificationService.error(error.message || 'Failed to update todo.');
+      }
+    } catch (error) {
+      notificationService.error('Network error. Please try again.');
+    }
   };
 
-  const handleDeleteTodo = (id) => {
-    setTodos(todos.filter(todo => todo.id !== id));
+  const handleDeleteTodo = async (id) => {
+    try {
+      const response = await fetch('/api/todos/delete', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+      });
+      if (response.ok) {
+        setTodos(todos.filter(todo => todo.id !== id));
+        notificationService.success('Todo deleted successfully!');
+      } else {
+        const error = await response.json();
+        notificationService.error(error.message || 'Failed to delete todo.');
+      }
+    } catch (error) {
+      notificationService.error('Network error. Please try again.');
+    }
   };
 
   const filteredAndSortedTodos = useMemo(() => {

@@ -12,6 +12,7 @@ import {
   Grid,
   IconButton,
   InputLabel,
+  ListItem,
   ListItemText,
   MenuItem,
   Select,
@@ -37,24 +38,11 @@ const TodoItem = ({ todo, onUpdate, onDelete }) => {
   const [editedNotes, setEditedNotes] = useState(todo.notes || '');
   const [editedTags, setEditedTags] = useState(todo.tags ? todo.tags.join(', ') : '');
 
-  const handleToggleComplete = async () => {
-    try {
-      const response = await fetch(`/api/todos/${todo.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ completed: !todo.completed })
-      });
-      if (response.ok) {
-        onUpdate(todo.id, { ...todo, completed: !todo.completed });
-      } else {
-        notificationService.error('Failed to update todo.');
-      }
-    } catch (error) {
-      notificationService.error('Network error.');
-    }
+  const handleToggleComplete = () => {
+    onUpdate(todo.id, { completed: !todo.completed });
   };
 
-  const handleSaveEdit = async () => {
+  const handleSaveEdit = () => {
     const tagsArray = editedTags.split(',').map(tag => tag.trim()).filter(Boolean);
     const updatedTodo = {
       text: editedText,
@@ -63,37 +51,12 @@ const TodoItem = ({ todo, onUpdate, onDelete }) => {
       notes: editedNotes,
       tags: tagsArray,
     };
-
-    try {
-      const response = await fetch(`/api/todos/${todo.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedTodo)
-      });
-      if (response.ok) {
-        onUpdate(todo.id, { ...todo, ...updatedTodo });
-        setIsEditing(false);
-        notificationService.success('Todo updated successfully!');
-      } else {
-        notificationService.error('Failed to update todo.');
-      }
-    } catch (error) {
-      notificationService.error('Network error.');
-    }
+    onUpdate(todo.id, updatedTodo);
+    setIsEditing(false);
   };
 
-  const handleDelete = async () => {
-    try {
-      const response = await fetch(`/api/todos/${todo.id}`, { method: 'DELETE' });
-      if (response.ok) {
-        onDelete(todo.id);
-        notificationService.success('Todo deleted successfully!');
-      } else {
-        notificationService.error('Failed to delete todo.');
-      }
-    } catch (error) {
-      notificationService.error('Network error.');
-    }
+  const handleDelete = () => {
+    onDelete(todo.id);
   };
 
   const priorityColor = {
@@ -150,8 +113,8 @@ const TodoItem = ({ todo, onUpdate, onDelete }) => {
           }
         />
         <Box>
-          <IconButton onClick={() => setIsEditing(true)}><EditIcon /></IconButton>
-          <IconButton onClick={handleDelete}><DeleteIcon /></IconButton>
+          <IconButton onClick={() => setIsEditing(true)} aria-label="Edit todo"><EditIcon /></IconButton>
+          <IconButton onClick={handleDelete} aria-label="Delete todo"><DeleteIcon /></IconButton>
         </Box>
       </ListItem>
 

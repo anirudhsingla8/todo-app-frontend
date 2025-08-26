@@ -63,9 +63,8 @@ function App() {
         body: JSON.stringify({ id, ...updatedTodo })
       });
       if (response.ok) {
-        const updated = await response.json();
         setTodos(todos.map(todo =>
-          todo.id === id ? updated : todo
+          todo.id === id ? { ...todo, ...updatedTodo } : todo
         ));
         notificationService.success('Todo updated successfully!');
       } else {

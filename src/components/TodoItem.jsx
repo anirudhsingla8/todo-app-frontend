@@ -91,15 +91,15 @@ const TodoItem = ({ todo, onUpdate, onDelete }) => {
           primary={
             <Typography
               variant="body1"
-              sx={{ fontWeight: 'bold', textDecoration: todo.completed ? 'line-through' : 'none' }}
+              sx={{ fontWeight: 'bold', textDecoration: todo.completed ? 'line-through' : 'none', wordBreak: 'break-word' }}
             >
               {todo.text}
             </Typography>
           }
           secondary={
             <Box component="span" sx={{ display: 'flex', flexDirection: 'column', mt: 1 }}>
-              {todo.notes && <Typography variant="body2" color="text.secondary">{todo.notes}</Typography>}
-              <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
+              {todo.notes && <Typography variant="body2" color="text.secondary" sx={{ wordBreak: 'break-word' }}>{todo.notes}</Typography>}
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 1 }}>
                 {todo.dueDate && (
                   <Chip
                     icon={<CalendarIcon />}
@@ -112,7 +112,7 @@ const TodoItem = ({ todo, onUpdate, onDelete }) => {
             </Box>
           }
         />
-        <Box>
+        <Box sx={{ display: 'flex', ml: 1 }}>
           <IconButton onClick={() => setIsEditing(true)} aria-label="Edit todo"><EditIcon /></IconButton>
           <IconButton onClick={handleDelete} aria-label="Delete todo"><DeleteIcon /></IconButton>
         </Box>

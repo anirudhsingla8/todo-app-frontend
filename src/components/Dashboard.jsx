@@ -92,7 +92,7 @@ const Dashboard = ({
                       {loading ? (
                         <Typography color="text.secondary">Loading...</Typography>
                       ) : filteredTodos.length > 0 ? (
-                        <Box sx={{ maxHeight: 'calc(100vh - 400px)', overflowY: 'auto', p: 0.5 }}>
+                        <Box sx={{ maxHeight: { xs: 'calc(100vh - 300px)', md: 'calc(100vh - 400px)' }, overflowY: 'auto', p: 0.5 }}>
                           {filteredTodos.map(todo => (
                             <TodoItem
                               key={todo.id}

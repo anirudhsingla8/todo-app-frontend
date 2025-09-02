@@ -103,11 +103,11 @@ function Login({ onLogin }) {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="sm">
       <Card
         sx={{
-          p: 4,
-          mt: 8,
+          p: { xs: 2, sm: 4 },
+          mt: { xs: 4, sm: 8 },
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
